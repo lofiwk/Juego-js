@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const button = document.getElementById('jugarButton');
-  button.addEventListener('click', jugar);
+document.addEventListener("DOMContentLoaded", function () {
+  const button = document.getElementById("jugarButton");
+  button.addEventListener("click", jugar);
 });
 
 function obtenerJugadaComputadora() {
@@ -29,27 +29,39 @@ function mostrarResultado(resultado) {
 }
 
 function jugar() {
-  const jugadas = ["Piedra", "Papel", "Tijera"];
-  let jugadaUsuario = prompt("Elige: Piedra, Papel o Tijera").toLowerCase();
+  let numJuegos = prompt(
+    "¿Cuántas veces quieres jugar? (Máximo 5 veces, mínimo 1)"
+  ).trim();
+  numJuegos = parseInt(numJuegos);
 
-  // Validar la entrada del usuario
-  while (!jugadas.some(opcion => opcion.toLowerCase() === jugadaUsuario)) {
-    alert("Por favor, elige una opción válida: Piedra, Papel o Tijera");
-    jugadaUsuario = prompt("Elige: Piedra, Papel o Tijera").toLowerCase();
+  if (isNaN(numJuegos) || numJuegos < 1 || numJuegos > 5) {
+    alert("Por favor, ingresa un número válido entre 1 y 5.");
+    return;
   }
 
-  const jugadaComputadora = obtenerJugadaComputadora();
+  for (let i = 0; i < numJuegos; i++) {
+    const jugadas = ["Piedra", "Papel", "Tijera"];
+    let jugadaUsuario = prompt("Elige: Piedra, Papel o Tijera").toLowerCase();
 
-  console.log("Tu jugada:", jugadaUsuario);
-  console.log("Jugada de la computadora:", jugadaComputadora);
+    // Validar la entrada del usuario
+    while (!jugadas.some((opcion) => opcion.toLowerCase() === jugadaUsuario)) {
+      alert("Por favor, elige una opción válida: Piedra, Papel o Tijera");
+      jugadaUsuario = prompt("Elige: Piedra, Papel o Tijera").toLowerCase();
+    }
 
-  const ganador = determinarGanador(jugadaUsuario, jugadaComputadora);
+    const jugadaComputadora = obtenerJugadaComputadora();
 
-  if (ganador === "usuario") {
-    mostrarResultado("¡Felicidades! ¡Has ganado!");
-  } else if (ganador === "computadora") {
-    mostrarResultado("Lo siento, has perdido contra la máquina.");
-  } else {
-    mostrarResultado("Es un empate.");
+    console.log("Tu jugada:", jugadaUsuario);
+    console.log("Jugada de la computadora:", jugadaComputadora);
+
+    const ganador = determinarGanador(jugadaUsuario, jugadaComputadora);
+
+    if (ganador === "usuario") {
+      mostrarResultado("¡Felicidades! ¡Has ganado!");
+    } else if (ganador === "computadora") {
+      mostrarResultado("Lo siento, has perdido contra la máquina.");
+    } else {
+      mostrarResultado("Es un empate.");
+    }
   }
 }
